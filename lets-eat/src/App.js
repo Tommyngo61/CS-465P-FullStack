@@ -1,11 +1,18 @@
 import "./App.css";
 import LandingPage from "./landingpage/LandingPage";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import Login from "./Login/Login";
+import SignUp from "./SignUp/SignUp";
 
 function App() {
   return (
-    <div className="App">
-      <LandingPage />
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/" component={LandingPage} />
+      </Switch>
+    </Router>
   );
 }
 

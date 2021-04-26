@@ -12,8 +12,8 @@ function TopNav() {
         <span>Let's Eat</span>
       </div>
       <div className="profile">
-        <a href="/">Login</a>
-        <a href="/">Sign Up</a>
+        <a href="/login">Login</a>
+        <a href="/signup">Sign Up</a>
       </div>
     </div>
   );
