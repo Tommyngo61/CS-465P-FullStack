@@ -1,0 +1,35 @@
+.searchArea {
+  display: flex;
+  justify-content: center;
+}
+.btn {
+  text-align: center;
+  margin: 10px;
+}
+.btn > input {
+  padding: 5px;
+  margin: 5px;
+}
+.currentLocation,
+.searchBar,
+.nearBar {
+  display: flex;
+  justify-content: space-around;
+  height: 30px;
+}
+.currentLocation input,
+.searchBar input,
+.nearBar input {
+  margin: 5;
+  width: 200px;
+  height: 30px;
+}
+.currentLocation label,
+.searchBar label,
+.nearBar label {
+  padding: 5px;
+  display: block;
+  height: 30px;
+  background-color: grey;
+  border-radius: 5px;
+}
