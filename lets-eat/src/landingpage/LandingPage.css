@@ -1,4 +1,9 @@
-.homeCard {
-  display: flex;
-  justify-content: center;
+.header {
+  position: relative;
 }
+
+/*
+body {
+  background: #6ca3a3;
+}
+*/
