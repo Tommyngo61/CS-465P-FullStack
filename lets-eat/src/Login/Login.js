@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Button, Card } from "react-bootstrap";
-import Link from "react-router-dom";
+import TopNav from "../Landingpage/TopNav/TopNav";
 
 export default function Login() {
   async function handleSubmit(e) {
@@ -9,6 +9,7 @@ export default function Login() {
 
   return (
     <>
+      <TopNav></TopNav>
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Log In</h2>
@@ -27,9 +28,7 @@ export default function Login() {
           </Form>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">
-        Need an account? <Link to="/signup">Sign Up</Link>
-      </div>
+      <div className="w-100 text-center mt-2">Need an account? Sign Up</div>
     </>
   );
 }
