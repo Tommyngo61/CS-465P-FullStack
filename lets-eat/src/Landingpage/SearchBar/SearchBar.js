@@ -17,7 +17,7 @@ function SearchBar() {
           <input type="input" id="Miles" />
         </div>
       </div>
-      <div className="btn">
+      <div class="btn">
         <input type="submit" value="Submit" />
         <input type="reset" value="Reset" />
       </div>
