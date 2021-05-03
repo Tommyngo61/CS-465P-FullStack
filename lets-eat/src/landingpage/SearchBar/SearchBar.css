@@ -1,3 +1,17 @@
+.header {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+input[type="checkbox"] {
+  width: 1em;
+  height: 1em;
+}
+
+.form-check-label {
+  font-size: 1.3em;
+}
+/*
 .searchArea {
   display: flex;
   justify-content: center;
@@ -35,3 +49,4 @@
   background-color: grey;
   border-radius: 5px;
 }
+*/
