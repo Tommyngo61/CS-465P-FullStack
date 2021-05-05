@@ -1,13 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import TopNav from "../Landingpage/TopNav/TopNav";
+import { Card, Button, Alert } from 'react-bootstrap'
+import { useAuth } from '../contexts/AuthContext'
+import { useHistory } from "react-router-dom"
 
-function ProfilePage() {
+
+export default function ProfilePage() {
+  const [error, setError] = useState("")
+  const { currentUser, logout } = useAuth()
+  const history = useHistory()
+
+  async function handleLogout() {
+    setError('')
+
+    try {
+      await logout()
+      history.pushState('/login')
+    } catch {
+      setError('Failed to log out')
+    }
+  }
+
   return (
-    <div>
-      <TopNav />
-      <p>This is the Profile Page screen</p>
-    </div>
-  );
+    <>
+     <TopNav></TopNav>
+     <Card>
+        <Card.Body>
+          <h2 className="text-center mb-4">Profile</h2>  
+          {error && <Alert variant="danger">{error}</Alert>}
+          <strong>Email:</strong> {currentUser.email}
+        </Card.Body>
+     </Card>
+     <div className="w-100 text-center mt-2">
+       <Button variant="link" onClick={handleLogout}>Log Out</Button>
+     </div>
+    </>
+  )
 }
 /*
 const ProfilePage = () => {
@@ -37,4 +65,3 @@ const ProfilePage = () => {
 };
 */
 
-export default ProfilePage;
