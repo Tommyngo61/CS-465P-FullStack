@@ -14,6 +14,7 @@ function TopNav() {
       <div className="profile">
         <a href="/login">Login</a>
         <a href="/signup">Sign Up</a>
+        <a href="/profilepage">Profile</a>
       </div>
     </div>
   );
