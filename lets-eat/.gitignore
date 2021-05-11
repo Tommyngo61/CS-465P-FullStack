@@ -6,7 +6,7 @@
 .pnp.js
 
 #API keys
-.env
+.env.local
 REACT_APP_API_KEY="AIzaSyCb6zBIN7QYk3AJo0X7Ya3vizk83NhRsNs"
 REACT_APP_AUTHDOMAIN="lets-eat-d122e.firebaseapp.com"
 REACT_APP_PROJECT_ID="lets-eat-d122e"
