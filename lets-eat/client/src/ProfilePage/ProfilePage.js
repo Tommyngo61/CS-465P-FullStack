@@ -1,41 +1,44 @@
 import React, { useState } from "react";
 import TopNav from "../Landingpage/TopNav/TopNav";
-import { Card, Button, Alert } from 'react-bootstrap'
-import { useAuth } from '../contexts/AuthContext'
-import { useHistory } from "react-router-dom"
-
+import { Card, Button, Alert, Container } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
 
 export default function ProfilePage() {
-  const [error, setError] = useState("")
-  const { currentUser, logout } = useAuth()
-  const history = useHistory()
+  const [error, setError] = useState("");
+  const { currentUser, logout } = useAuth();
+  const history = useHistory();
 
   async function handleLogout() {
-    setError('')
+    setError("");
 
     try {
-      await logout()
-      history.pushState('/login')
+      await logout();
+      history.pushState("/login");
     } catch {
-      setError('Failed to log out')
+      setError("Failed to log out");
     }
   }
 
   return (
     <>
-     <TopNav></TopNav>
-     <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Profile</h2>  
-          {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email:</strong> {currentUser.email}
-        </Card.Body>
-     </Card>
-     <div className="w-100 text-center mt-2">
-       <Button variant="link" onClick={handleLogout}>Log Out</Button>
-     </div>
+      <TopNav></TopNav>
+      <Container className="container-fluid mt-5">
+        <Card className="ml-5">
+          <Card.Body>
+            <h2 className="text-center mb-4">Profile</h2>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <strong>Email:</strong> {currentUser.email}
+          </Card.Body>
+        </Card>
+        <div className="w-100 text-center mt-2">
+          <Button variant="link" onClick={handleLogout}>
+            Log Out
+          </Button>
+        </div>
+      </Container>
     </>
-  )
+  );
 }
 /*
 const ProfilePage = () => {
@@ -64,4 +67,3 @@ const ProfilePage = () => {
   );
 };
 */
-

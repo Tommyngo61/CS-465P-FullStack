@@ -30,11 +30,12 @@ function Search() {
       <h1>
         {term} {location}
       </h1>
-      <ul>
+
+      {/* <ul>
         {places.map((place) => {
           return <li key={place.id}>{place.name}</li>;
         })}
-      </ul>
+      </ul> */}
     </>
   );
 }
