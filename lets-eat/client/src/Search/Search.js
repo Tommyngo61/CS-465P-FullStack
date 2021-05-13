@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import TopNav from "../Landingpage/TopNav/TopNav";
 import { useLocation } from "react-router-dom";
+import ReactStars from "react-rating-stars-component";
 import axios from "axios";
 
 function Search() {
@@ -28,16 +30,69 @@ function Search() {
   return (
     <>
       <TopNav />
-      <h1>
+      <Container fluid>
+        <Row>
+          <Col>
+            <h1>Restaurant Name</h1>
+          </Col>
+        </Row>
+        <Row className="mt-5 justify-content-md-center">
+          <Col xs={{ span: 3, offset: 1 }}>
+            <img src="https://via.placeholder.com/300" alt="placeholder"></img>
+          </Col>
+          <Col xs={6} className="ml-5">
+            <ReactStars
+              count={5}
+              value={4}
+              size={30}
+              edit={false}
+              activeColor="#ffd700"
+            />
+            <h2>Description</h2>
+            <span>
+              Mauris laoreet congue luctus. Ut condimentum magna id risus
+              iaculis, ac mollis turpis ultrices. Sed facilisis dui neque,
+              malesuada dictum enim malesuada non. Cras congue auctor libero et
+              imperdiet. Vestibulum interdum arcu est. Aliquam ultricies
+              accumsan arcu id hendrerit. Fusce cursus, urna vel pulvinar
+              ullamcorper, augue lorem varius diam, ut varius erat sapien at
+              odio. Sed bibendum ante et ullamcorper hendrerit. Vestibulum
+            </span>
+          </Col>
+          <Col></Col>
+        </Row>
+        <Row className="mt-5 justify-content-md-center">
+          <Col xs={{ offset: 6 }}>
+            <Button variant="primary" size="lg" type="submit">
+              Reroll
+            </Button>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  );
+}
+
+/*
+  <h1>
         {term} {location}
       </h1>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 63d1cc5249e1da22fc272d4aceb864cd63868edd
       <ul>
         {places.map((place) => {
           return <li key={place.key}>{place.name}</li>;
         })}
+<<<<<<< HEAD
       </ul>
     </>
   );
 }
+=======
+      </ul> 
+*/
+>>>>>>> 63d1cc5249e1da22fc272d4aceb864cd63868edd
 
 export default Search;
