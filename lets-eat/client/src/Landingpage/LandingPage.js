@@ -6,12 +6,22 @@ import "./LandingPage.css";
 //import { Container, Row, Col } from "react-bootstrap";
 //import Jumbotron from "react-bootstrap/Jumbotron";
 //import Carousel from "react-bootstrap/Carousel"
+import { useHistory } from "react-router-dom";
 
 function LandingPage() {
+  const history = useHistory();
+
+  const search = (term, location) => {
+    const urlEncodedTerm = encodeURI(term);
+    const urlEncodedLocation = encodeURI(location);
+    history.push(
+      `/search?find_desc=${urlEncodedTerm}&find_loc=${urlEncodedLocation}`
+    );
+  };
   return (
     <div className="landingPage">
       <TopNav />
-      <SearchBar />
+      <SearchBar search={search} />
     </div>
   );
 }

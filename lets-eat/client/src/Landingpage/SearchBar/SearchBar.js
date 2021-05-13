@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SearchBar.css";
 import { Form, Button, Card, Col, InputGroup, Row } from "react-bootstrap";
 
@@ -10,13 +10,23 @@ import { Form, Button, Card, Col, InputGroup, Row } from "react-bootstrap";
               </select>
 */
 
-function SearchBar() {
+function SearchBar(props) {
+  const [term, setTerm] = useState("");
+  const [location, setLocation] = useState("");
+
+  const submit = (e) => {
+    if (typeof props.search === "function") {
+      props.search(term, location);
+    }
+    e.preventDefault();
+    console.log(term, location);
+  };
   return (
     <div className="container-fluid w-100 m-200 p-3 justify-content-center">
       <Col className="col-4" xs={{ offset: 4 }}>
         <Card className="card p-3 rounded shadow-sm">
           <Card.Body>
-            <Form className="">
+            <Form className="" onSubmit={submit}>
               <Form.Label htmlFor="inlineFormInputGroup" srOnly>
                 Search for a resturant, bakery, etc
               </Form.Label>
@@ -28,19 +38,23 @@ function SearchBar() {
                   id="inlineFormInputGroup"
                   placeholder="Restaurants, Bakeries, etc"
                   required
+                  onChange={(e) => setTerm(e.target.value)}
+                  value={term}
                 />
               </InputGroup>
 
               <Form.Group controlId="address">
-                <Form.Label className="">Address</Form.Label>
+                <Form.Label className="">Location</Form.Label>
                 <Form.Control
                   type="text"
-                  name="address"
-                  placeholder="1234 Main St"
+                  name="location"
+                  placeholder="address, neighborhood, city, state or zip"
+                  onChange={(e) => setLocation(e.target.value)}
+                  value={location}
                   required
                 />
               </Form.Group>
-              <Form.Row>
+              {/* <Form.Row>
                 <Form.Group as={Col} controlId="city">
                   <Form.Label className="">City</Form.Label>
                   <Form.Control
@@ -68,7 +82,7 @@ function SearchBar() {
                     required
                   />
                 </Form.Group>
-              </Form.Row>
+              </Form.Row> */}
               <Form.Group controlId="distance">
                 <Form.Label className="header">Distance</Form.Label>
                 <Form.Control
@@ -126,7 +140,12 @@ function SearchBar() {
                 </Row>
               </Form.Group>
 
-              <Button variant="primary" size="lg" type="submit">
+              <Button
+                variant="primary"
+                size="lg"
+                type="submit"
+                onClick={submit}
+              >
                 Search
               </Button>
             </Form>
