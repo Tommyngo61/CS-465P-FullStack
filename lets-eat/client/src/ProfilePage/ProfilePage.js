@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import TopNav from "../Landingpage/TopNav/TopNav";
-import { Card, Button, Alert, Container } from "react-bootstrap";
+import {
+  Card,
+  Button,
+  Alert,
+  Container,
+  Row,
+  Col,
+  Table,
+} from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 
@@ -28,7 +36,67 @@ export default function ProfilePage() {
           <Card.Body>
             <h2 className="text-center mb-4">Profile</h2>
             {error && <Alert variant="danger">{error}</Alert>}
-            <strong>Email:</strong> {currentUser.email}
+            <Row>
+              <strong>Email:</strong> {currentUser.email}
+            </Row>
+            <Row>
+              <Col xs={4}>
+                <img
+                  src="https://via.placeholder.com/300x200"
+                  alt="placeholder"
+                ></img>
+              </Col>
+              <Col>
+                <Card>
+                  <Card.Header>
+                    <h2>Bio</h2>
+                  </Card.Header>
+                  <Card.Body>
+                    <p>
+                      Even in unflattering office light, Breanna McKenzie had
+                      the healthy glow of someone who jogged each morning,
+                      practised yoga with intent and deep-conditioned her glossy
+                      black ponytail religiously every Sunday.
+                    </p>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={6} className="mt-5">
+                <h3>List of Restaurants</h3>
+                <Table striped bordered hover size="sm">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>name of Restaurant</th>
+                      <th>Location</th>
+                      <th>x</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Larry the Bird</td>
+                      <td>location</td>
+                      <td>@twitter</td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </Col>
+            </Row>
           </Card.Body>
         </Card>
         <div className="w-100 text-center mt-2">

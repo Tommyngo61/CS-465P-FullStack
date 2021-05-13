@@ -35,11 +35,11 @@ function Search() {
             <h1>Restaurant Name</h1>
           </Col>
         </Row>
-        <Row className="justify-content-md-center">
+        <Row className="mt-5 justify-content-md-center">
           <Col xs={{ span: 3, offset: 1 }}>
-            <img src="https://via.placeholder.com/300" alt="hi"></img>
+            <img src="https://via.placeholder.com/300" alt="placeholder"></img>
           </Col>
-          <Col>
+          <Col xs={6} className="ml-5">
             <ReactStars
               count={5}
               value={4}
@@ -56,9 +56,6 @@ function Search() {
               accumsan arcu id hendrerit. Fusce cursus, urna vel pulvinar
               ullamcorper, augue lorem varius diam, ut varius erat sapien at
               odio. Sed bibendum ante et ullamcorper hendrerit. Vestibulum
-              rhoncus est eu enim pharetra fringilla. Cras ultricies neque ac
-              augue fermentum, eget sodales erat feugiat. Quisque aliquet
-              finibus arcu, quis aliquet erat pharetra non. Nunc mattis metus
             </span>
           </Col>
           <Col></Col>
