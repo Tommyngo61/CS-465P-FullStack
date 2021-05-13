@@ -13,6 +13,7 @@ import { Form, Button, Card, Col, InputGroup, Row } from "react-bootstrap";
 function SearchBar(props) {
   const [term, setTerm] = useState("");
   const [location, setLocation] = useState("");
+  const [check, setCheck] = useState("");
 
   const submit = (e) => {
     if (typeof props.search === "function") {
@@ -20,6 +21,22 @@ function SearchBar(props) {
     }
     e.preventDefault();
     console.log(term, location);
+    console.log("check", check);
+  };
+  const checkvalue = (e) => {
+    // var all_users = [];
+    // var value = this.checkbox.value;
+    // all_users.push(value);
+    // console.log(all_users);
+    console.log(e.target.checked);
+    console.log(e.target.value);
+
+    if (e.target.checked === true) {
+      setCheck([...check, e.target.value]);
+    } else {
+      setCheck(check.filter((target) => target !== e.target.value));
+    }
+    console.log("hi", check);
   };
   return (
     <div className="container-fluid w-100 m-200 p-3 justify-content-center">
@@ -83,7 +100,7 @@ function SearchBar(props) {
                   />
                 </Form.Group>
               </Form.Row> */}
-              <Form.Group controlId="distance">
+              {/* <Form.Group controlId="distance">
                 <Form.Label className="header">Distance</Form.Label>
                 <Form.Control
                   type="text"
@@ -110,7 +127,7 @@ function SearchBar(props) {
                   name="dine-in"
                   label="dine-in"
                 ></Form.Check>
-              </Form.Group>
+              </Form.Group> */}
 
               <Form.Group controlId="price">
                 <Form.Label className="header">Price Ranges:</Form.Label>
@@ -121,6 +138,8 @@ function SearchBar(props) {
                       type="checkbox"
                       name="cheapest"
                       label="$"
+                      value="1"
+                      onChange={checkvalue}
                     ></Form.Check>
                   </Col>
                   <Col>
@@ -128,6 +147,8 @@ function SearchBar(props) {
                       type="checkbox"
                       name="cheaper"
                       label="$$"
+                      value="2"
+                      onChange={checkvalue}
                     ></Form.Check>
                   </Col>
                   <Col>
@@ -135,6 +156,8 @@ function SearchBar(props) {
                       type="checkbox"
                       name="lessCheap"
                       label="$$$"
+                      value="3"
+                      onChange={checkvalue}
                     ></Form.Check>
                   </Col>
                 </Row>

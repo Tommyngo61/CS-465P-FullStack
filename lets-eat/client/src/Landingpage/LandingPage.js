@@ -11,9 +11,15 @@ import { useHistory } from "react-router-dom";
 function LandingPage() {
   const history = useHistory();
 
-  const search = (term, location) => {
+  const search = (term, location, check) => {
     const urlEncodedTerm = encodeURI(term);
     const urlEncodedLocation = encodeURI(location);
+    // const urlEncodedCheck = encodeURI(check);
+    // history.push(
+    //   `/search?find_desc=${urlEncodedTerm}&find_loc=${urlEncodedLocation}${
+    //     urlEncodedCheck ? `&price=${urlEncodedCheck}` : ""
+    //   }`
+    // );
     history.push(
       `/search?find_desc=${urlEncodedTerm}&find_loc=${urlEncodedLocation}`
     );
