@@ -27,8 +27,6 @@ app.get("/v3/businesses/search", async (req, res) => {
   const bye = req.url.split("?");
   const hi = parseParams(bye[1]);
   const data = await getData(hi);
-
-  console.log(hi);
   res.send(data);
 });
 

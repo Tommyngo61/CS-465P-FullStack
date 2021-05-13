@@ -12,12 +12,15 @@ function Search() {
     const params = new URLSearchParams(location1.search);
     setTerm(params.get("find_desc"));
     setLocation(params.get("find_loc"));
-    axios
-      .get(
-        `http://localhost:5000/v3/businesses/search?term=${term}&location=${location}`
-      )
-      .then(({ data }) => console.log(data))
-      .catch((err) => console.log(err));
+    const getData = async () => {
+      await axios
+        .get(
+          `http://localhost:5000/v3/businesses/search?term=${term}&location=${location}`
+        )
+        .then(({ data }) => setPlaces(data))
+        .catch((err) => console.log(err));
+    };
+    getData();
   }, [location1.search, location, term]);
 
   ///end here
@@ -27,6 +30,11 @@ function Search() {
       <h1>
         {term} {location}
       </h1>
+      <ul>
+        {places.map((place) => {
+          return <li key={place.id}>{place.name}</li>;
+        })}
+      </ul>
     </>
   );
 }
