@@ -63,6 +63,7 @@ function Search() {
         <Row className="mt-5 justify-content-md-center">
           <Col xs={{ span: 3, offset: 1 }}>
             <img
+              className="image"
               src={isLoading ? randomPlace.image_url : ""}
               alt={isLoading ? randomPlace.name : ""}
               width={300}
