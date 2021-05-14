@@ -4,7 +4,7 @@ import TopNav from "../Landingpage/TopNav/TopNav";
 import { useLocation } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import axios from "axios";
-import firebase from '../firebaseDB/firebase';
+import firebase from "../firebaseDB/firebase";
 import { useAuth } from "../contexts/AuthContext";
 
 function Search() {
@@ -43,9 +43,8 @@ function Search() {
       console.log("random place", randomPlace);
 
       // db.collection('users').doc(currentUser.uid).set({
-        // restaurant: 'PhoKing'
+      // restaurant: 'PhoKing'
       // })
-
     };
     chooseRandom();
     // eslint-disable-next-line react-hooks/exhaustive-deps
