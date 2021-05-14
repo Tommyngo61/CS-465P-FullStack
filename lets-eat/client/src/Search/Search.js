@@ -76,7 +76,7 @@ function Search() {
             />
             <h2>Description</h2>
             <span>
-              Mauris laoreet congue luctus. Ut condimentum magna id risus
+              Mauris a laoreet congue luctus. Ut condimentum magna id risus
               iaculis, ac mollis turpis ultrices. Sed facilisis dui neque,
               malesuada dictum enim malesuada non. Cras congue auctor libero et
               imperdiet. Vestibulum interdum arcu est. Aliquam ultricies
