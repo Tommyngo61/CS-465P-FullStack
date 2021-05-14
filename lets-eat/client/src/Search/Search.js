@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import TopNav from "../Landingpage/TopNav/TopNav";
 import { useLocation } from "react-router-dom";
@@ -13,8 +13,11 @@ function Search() {
   const term = params.get("find_desc");
   const location = params.get("find_loc");
   const [places, setPlaces] = useState([]);
+  const [randomPlace, setRandomPlace] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(false);
     const getData = async () => {
       await axios
         .get(
@@ -26,6 +29,18 @@ function Search() {
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useLayoutEffect(() => {
+    const chooseRandom = () => {
+      const len = places.length;
+      const number = Math.floor(Math.random() * len);
+      setRandomPlace(places[number]);
+      setIsLoading(true);
+      console.log("random place", randomPlace);
+    };
+    chooseRandom();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [places]);
   ///end here
   return (
     <>
@@ -33,17 +48,20 @@ function Search() {
       <Container fluid>
         <Row>
           <Col>
-            <h1>Restaurant Name</h1>
+            <h1>{isLoading ? randomPlace.name : ""}</h1>
           </Col>
         </Row>
         <Row className="mt-5 justify-content-md-center">
           <Col xs={{ span: 3, offset: 1 }}>
-            <img src="https://via.placeholder.com/300" alt="placeholder"></img>
+            <img
+              src={isLoading ? randomPlace.image_url : ""}
+              alt={isLoading ? randomPlace.name : ""}
+            ></img>
           </Col>
           <Col xs={6} className="ml-5">
             <ReactStars
               count={5}
-              value={4}
+              value={isLoading ? randomPlace.rating : ""}
               size={30}
               edit={false}
               activeColor="#ffd700"
@@ -77,22 +95,11 @@ function Search() {
   <h1>
         {term} {location}
       </h1>
-<<<<<<< HEAD
-=======
-
->>>>>>> 63d1cc5249e1da22fc272d4aceb864cd63868edd
       <ul>
         {places.map((place) => {
           return <li key={place.key}>{place.name}</li>;
         })}
-<<<<<<< HEAD
-      </ul>
-    </>
-  );
-}
-=======
       </ul> 
 */
->>>>>>> 63d1cc5249e1da22fc272d4aceb864cd63868edd
 
 export default Search;
