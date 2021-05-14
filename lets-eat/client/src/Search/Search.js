@@ -10,6 +10,7 @@ import { useAuth } from "../contexts/AuthContext";
 function Search() {
   let location1 = useLocation();
   //this is the infomation the people seach. I got the variables for you to use it anywhere you want
+  const db = firebase.firestore();
   console.log("bye");
   const params = new URLSearchParams(location1.search);
   const term = params.get("find_desc");
@@ -41,7 +42,7 @@ function Search() {
       setIsLoading(true);
       console.log("random place", randomPlace);
 
-      firebase.firestore().collection('users').doc(currentUser.uid).set({
+      db.collection('users').doc(currentUser.uid).set({
         restaurant: 'PhoKing'
       })
 
