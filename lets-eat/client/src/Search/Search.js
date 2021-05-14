@@ -4,6 +4,8 @@ import TopNav from "../Landingpage/TopNav/TopNav";
 import { useLocation } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import axios from "axios";
+import firebase from '../firebaseDB/firebase';
+import { useAuth } from "../contexts/AuthContext";
 
 function Search() {
   let location1 = useLocation();
@@ -15,6 +17,7 @@ function Search() {
   const [places, setPlaces] = useState([]);
   const [randomPlace, setRandomPlace] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     setIsLoading(false);
@@ -37,6 +40,11 @@ function Search() {
       setRandomPlace(places[number]);
       setIsLoading(true);
       console.log("random place", randomPlace);
+
+      firebase.firestore().collection('users').doc(currentUser.uid).set({
+        restaurant: 'PhoKing'
+      })
+
     };
     chooseRandom();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,7 +69,7 @@ function Search() {
           <Col xs={6} className="ml-5">
             <ReactStars
               count={5}
-              value={isLoading ? randomPlace.rating : ""}
+              value={isLoading ? randomPlace.rating : 0}
               size={30}
               edit={false}
               activeColor="#ffd700"
