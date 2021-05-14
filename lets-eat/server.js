@@ -6,6 +6,8 @@ const url = require("url");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config/config.env" });
 
+const fetch = require("node-fetch");
+
 //Bodyparser Middleware
 app.use(cors());
 app.use(express.json());
@@ -21,7 +23,7 @@ const getData = async (hi) => {
     });
   return data;
 };
-
+//this is where I get all bussiness
 app.get("/v3/businesses/search", async (req, res) => {
   console.log(req.url);
   const bye = req.url.split("?");
@@ -29,6 +31,26 @@ app.get("/v3/businesses/search", async (req, res) => {
   console.log(hi);
   const data = await getData(hi); // const data = await getData(hi);
   res.send(data);
+  res.end();
+});
+
+//this is where I get the review for each bussiness
+let myHeader = {
+  "Content-Type": "application/json",
+  Authorization: `${process.env.YELP_ID} : ${process.env.YELP_API}`,
+};
+app.get("/v3/businesses/:id", async (req, res) => {
+  console.log(req.url);
+  console.log(req.params.id);
+  const data = await fetch(
+    `https://api.yelp.com/v3/businesses/${req.params.id}}/reviews`,
+    { Method: "GET", headers: myHeader }
+  )
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => console.log(err));
+  console.log(data);
+  res.end();
 });
 
 const PORT = process.env.PORT || 5000;

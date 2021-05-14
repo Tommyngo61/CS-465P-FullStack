@@ -26,7 +26,7 @@ export default function Signup() {
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value).then(cred => {
+      await signup(emailRef.current.value, passwordRef.current.value).then(() => {
         db.collection('users').doc(currentUser.uid).set({
           restaurants: ['test restaurant']
         })
