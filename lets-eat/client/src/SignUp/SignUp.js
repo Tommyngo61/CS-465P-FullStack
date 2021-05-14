@@ -3,6 +3,7 @@ import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import TopNav from "../Landingpage/TopNav/TopNav";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
+import firebase from '../firebaseDB/firebase';
 
 export default function Signup() {
   const emailRef = useRef();
@@ -12,6 +13,8 @@ export default function Signup() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const { currentUser } = useAuth();
+  const db = firebase.firestore();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -23,7 +26,11 @@ export default function Signup() {
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
+      await signup(emailRef.current.value, passwordRef.current.value).then(cred => {
+        db.collection('users').doc(currentUser.uid).set({
+          restaurants: ['test restaurant']
+        })
+      });
       history.push("/");
     } catch {
       setError("Failed to sign up");

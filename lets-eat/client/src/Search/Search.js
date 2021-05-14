@@ -42,9 +42,9 @@ function Search() {
       setIsLoading(true);
       console.log("random place", randomPlace);
 
-      db.collection('users').doc(currentUser.uid).set({
-        restaurant: 'PhoKing'
-      })
+      // db.collection('users').doc(currentUser.uid).set({
+        // restaurant: 'PhoKing'
+      // })
 
     };
     chooseRandom();
