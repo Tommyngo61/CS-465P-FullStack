@@ -70,17 +70,7 @@ function Search() {
               height={300}
             ></img>
           </Col>
-<<<<<<< HEAD
           <Col xs={6} className="description ml-5">
-            <ReactStars
-              count={5}
-              value={isLoading ? randomPlace.rating : 0}
-              size={30}
-              edit={false}
-              activeColor="#ffd700"
-            />
-=======
-          <Col xs={6} className="ml-5">
             {isLoading && (
               <ReactStars
                 count={5}
@@ -90,7 +80,6 @@ function Search() {
                 activeColor="#ffd700"
               />
             )}
->>>>>>> main
             <h2>Description</h2>
             <span>
               Mauris a laoreet congue luctus. Ut condimentum magna id risus
