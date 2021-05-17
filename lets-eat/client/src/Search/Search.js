@@ -6,6 +6,7 @@ import ReactStars from "react-rating-stars-component";
 import axios from "axios";
 import firebase from "../firebaseDB/firebase";
 import { useAuth } from "../contexts/AuthContext";
+import "./Search.css";
 
 function Search() {
   let location1 = useLocation();
@@ -75,11 +76,14 @@ function Search() {
         <Row className="mt-5 justify-content-md-center">
           <Col xs={{ span: 3, offset: 1 }}>
             <img
+              className="image"
               src={isLoading ? randomPlace.image_url : ""}
               alt={isLoading ? randomPlace.name : ""}
+              width={300}
+              height={300}
             ></img>
           </Col>
-          <Col xs={6} className="ml-5">
+          <Col xs={6} className="description ml-5">
             {isLoading && (
               <ReactStars
                 count={5}
@@ -106,6 +110,14 @@ function Search() {
           <Col xs={{ offset: 6 }}>
             <Button variant="primary" size="lg" type="submit">
               Reroll
+            </Button>
+            <Button
+              className="pick-btn"
+              variant="primary"
+              size="lg"
+              type="submit"
+            >
+              Try This Place!
             </Button>
           </Col>
         </Row>
