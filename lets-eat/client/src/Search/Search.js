@@ -10,7 +10,6 @@ import { useAuth } from "../contexts/AuthContext";
 function Search() {
   let location1 = useLocation();
   //this is the infomation the people seach. I got the variables for you to use it anywhere you want
-  const db = firebase.firestore();
   console.log("bye");
   const params = new URLSearchParams(location1.search);
   const term = params.get("find_desc");
@@ -18,6 +17,7 @@ function Search() {
   const [places, setPlaces] = useState([]);
   const [randomPlace, setRandomPlace] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const db = firebase.firestore();
   const { currentUser } = useAuth();
 
   useEffect(() => {
@@ -41,21 +41,34 @@ function Search() {
       setRandomPlace(places[number]);
       setIsLoading(true);
       console.log("random place", randomPlace);
+      //updateFirestore();
 
-      // db.collection('users').doc(currentUser.uid).set({
-      // restaurant: 'PhoKing'
-      // })
+      //db.collection('users').doc(currentUser.uid).update({
+        //restaurants: firebase.firestore.FieldValue.arrayUnion(randomPlace.name)
+      //});
+
     };
     chooseRandom();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [places]);
   ///end here
+
+  const updateFirestore = () => {
+   
+    console.log("random place23", randomPlace);
+    db.collection('users').doc(currentUser.uid).update({
+      restaurants: firebase.firestore.FieldValue.arrayUnion(randomPlace.name)
+    })
+  };
+
   return (
     <>
       <TopNav />
       <Container fluid>
         <Row>
           <Col>
+          {isLoading ? updateFirestore() : ""} 
             <h1>{isLoading ? randomPlace.name : ""}</h1>
           </Col>
         </Row>
@@ -100,6 +113,16 @@ function Search() {
     </>
   );
 }
+
+//export function SavePlaceAfterSearch() {
+  //const db = firebase.firestore();
+  //const { currentUser } = useAuth();
+  //Search(function() {
+    //db.collection('users').doc(currentUser.uid).update({
+      //restaurants: firebase.firestore.FieldValue.arrayUnion("PhoKing")
+    //});   
+  //})
+//}
 
 /*
   <h1>
