@@ -9,12 +9,10 @@ export default function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const { signup } = useAuth();
+  const { signup, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const { currentUser } = useAuth();
-  const db = firebase.firestore();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -26,11 +24,7 @@ export default function Signup() {
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value).then(() => {
-        db.collection('users').doc(currentUser.uid).set({
-          restaurants: ['test restaurant']
-        })
-      });
+      await signup(emailRef.current.value, passwordRef.current.value)
       history.push("/");
     } catch {
       setError("Failed to sign up");
