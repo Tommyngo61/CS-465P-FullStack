@@ -98,6 +98,14 @@ function Search() {
             <Button variant="primary" size="lg" type="submit">
               Reroll
             </Button>
+            <Button
+              className="pick-btn"
+              variant="primary"
+              size="lg"
+              type="submit"
+            >
+              Try This Place!
+            </Button>
           </Col>
         </Row>
       </Container>
