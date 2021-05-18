@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TopNav from "../Landingpage/TopNav/TopNav";
 import {
   Card,
@@ -11,11 +11,42 @@ import {
 } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
+import "./ProfilePage.css";
+import firebase from "../firebaseDB/firebase";
 
 export default function ProfilePage() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
+  const [tableData, setTableData] = useState("");
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const db = firebase.firestore();
+
+  //var docRef = db.collection("users").doc(currentUser.uid);
+  useEffect(() => {
+    var data = async () =>
+      await db
+        .collection("users")
+        .doc(currentUser.uid)
+        .get()
+        .then((doc) => {
+          console.log("Document data:", doc.data());
+          //console.log(typeof doc.data());
+          setTableData(doc.data().restaurants);
+          console.log("mytable", tableData);
+          setLoading(true);
+          //console.log("hi", tableData);
+          //displayTable(doc.data);
+          //return doc.data();
+        })
+        .catch((error) => {
+          console.log("Error getting document:", error);
+        });
+    data();
+    //console.log(data);
+    // loading ? console.log(tableData) : console.log("no data");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading]);
 
   async function handleLogout() {
     setError("");
@@ -27,6 +58,27 @@ export default function ProfilePage() {
       setError("Failed to log out");
     }
   }
+  const displayTable = () => {
+    return (
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>name of Restaurant</th>
+            <th>Location</th>
+            <th>x</th>
+          </tr>
+        </thead>
+        {tableData.map((item, i) => (
+          <tbody>
+            <tr key={i}>
+              <td>{item}</td>
+            </tr>
+          </tbody>
+        ))}
+      </Table>
+    );
+  };
 
   return (
     <>
@@ -65,36 +117,7 @@ export default function ProfilePage() {
             <Row>
               <Col xs={6} className="mt-5">
                 <h3>List of Restaurants</h3>
-                <Table striped bordered hover size="sm">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>name of Restaurant</th>
-                      <th>Location</th>
-                      <th>x</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Larry the Bird</td>
-                      <td>location</td>
-                      <td>@twitter</td>
-                    </tr>
-                  </tbody>
-                </Table>
+                <div className="myTable">{loading && displayTable()}</div>
               </Col>
             </Row>
           </Card.Body>
