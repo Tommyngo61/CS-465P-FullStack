@@ -37,6 +37,7 @@ function Search() {
 
   useLayoutEffect(() => {
     const chooseRandom = () => {
+      setIsLoading(false);
       const len = places.length;
       const number = Math.floor(Math.random() * len);
       setRandomPlace(places[number]);
@@ -107,7 +108,12 @@ function Search() {
         </Row>
         <Row className="mt-5 justify-content-md-center">
           <Col xs={{ offset: 6 }}>
-            <Button variant="primary" size="lg" type="submit">
+            <Button
+              variant="primary"
+              size="lg"
+              type="submit"
+              onClick={() => window.location.reload()}
+            >
               Reroll
             </Button>
             <Button

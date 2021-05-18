@@ -37,13 +37,13 @@ app.get("/v3/businesses/search", async (req, res) => {
 //this is where I get the review for each bussiness
 let myHeader = {
   "Content-Type": "application/json",
-  Authorization: `${process.env.YELP_ID} : ${process.env.YELP_API}`,
+  Authorization: `Bearer ${process.env.YELP_API}`,
 };
 app.get("/v3/businesses/:id", async (req, res) => {
   console.log(req.url);
   console.log(req.params.id);
   const data = await fetch(
-    `https://api.yelp.com/v3/businesses/${req.params.id}}/reviews`,
+    `https://api.yelp.com/v3/businesses/${req.params.id}/reviews`,
     { Method: "GET", headers: myHeader }
   )
     .then((res) => res.json())
