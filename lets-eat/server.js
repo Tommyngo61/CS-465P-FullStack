@@ -27,6 +27,7 @@ const getData = async (hi) => {
 app.get("/v3/businesses/search", async (req, res) => {
   console.log(req.url);
   const bye = req.url.split("?");
+  console.log(bye);
   const hi = parseParams(bye[1]);
   console.log(hi);
   const data = await getData(hi); // const data = await getData(hi);
@@ -49,7 +50,7 @@ app.get("/v3/businesses/:id", async (req, res) => {
     .then((res) => res.json())
     .then((data) => data)
     .catch((err) => console.log(err));
-  console.log(data);
+  res.send(data);
   res.end();
 });
 

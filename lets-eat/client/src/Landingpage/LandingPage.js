@@ -11,17 +11,13 @@ import { useHistory } from "react-router-dom";
 function LandingPage() {
   const history = useHistory();
 
-  const search = (term, location, check) => {
+  const search = (term, location, price) => {
     const urlEncodedTerm = encodeURI(term);
     const urlEncodedLocation = encodeURI(location);
-    // const urlEncodedCheck = encodeURI(check);
-    // history.push(
-    //   `/search?find_desc=${urlEncodedTerm}&find_loc=${urlEncodedLocation}${
-    //     urlEncodedCheck ? `&price=${urlEncodedCheck}` : ""
-    //   }`
-    // );
+    const urlEncodedPrice = encodeURI(price);
+    console.log(price);
     history.push(
-      `/search?find_desc=${urlEncodedTerm}&find_loc=${urlEncodedLocation}`
+      `/search?find_desc=${urlEncodedTerm}&find_loc=${urlEncodedLocation}&price=${urlEncodedPrice}`
     );
   };
   return (

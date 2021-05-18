@@ -17,26 +17,16 @@ function SearchBar(props) {
 
   const submit = (e) => {
     if (typeof props.search === "function") {
-      props.search(term, location);
+      props.search(term, location, check);
     }
     e.preventDefault();
-    console.log(term, location);
-    console.log("check", check);
   };
   const checkvalue = (e) => {
-    // var all_users = [];
-    // var value = this.checkbox.value;
-    // all_users.push(value);
-    // console.log(all_users);
-    console.log(e.target.checked);
-    console.log(e.target.value);
-
     if (e.target.checked === true) {
       setCheck([...check, e.target.value]);
     } else {
       setCheck(check.filter((target) => target !== e.target.value));
     }
-    console.log("hi", check);
   };
   return (
     <div className="container-fluid w-100 m-200 p-3 justify-content-center">
