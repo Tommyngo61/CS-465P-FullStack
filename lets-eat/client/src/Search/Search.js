@@ -45,22 +45,22 @@ function Search() {
       //updateFirestore();
 
       //db.collection('users').doc(currentUser.uid).update({
-        //restaurants: firebase.firestore.FieldValue.arrayUnion(randomPlace.name)
+      //restaurants: firebase.firestore.FieldValue.arrayUnion(randomPlace.name)
       //});
-
     };
     chooseRandom();
 
-  //eslint-disable-next-line react-hooks/exhaustive-deps
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [places]);
   ///end here
 
   const updateFirestore = () => {
-   
     console.log("random place23", randomPlace);
-    db.collection('users').doc(currentUser.uid).update({
-      restaurants: firebase.firestore.FieldValue.arrayUnion(randomPlace.name)
-    })
+    db.collection("users")
+      .doc(currentUser.uid)
+      .update({
+        restaurants: firebase.firestore.FieldValue.arrayUnion(randomPlace),
+      });
   };
 
   return (
@@ -69,7 +69,6 @@ function Search() {
       <Container fluid>
         <Row>
           <Col>
-          {isLoading ? updateFirestore() : ""} 
             <h1>{isLoading ? randomPlace.name : ""}</h1>
           </Col>
         </Row>
@@ -116,6 +115,7 @@ function Search() {
               variant="primary"
               size="lg"
               type="submit"
+              onClick={() => updateFirestore()}
             >
               Try This Place!
             </Button>
@@ -127,13 +127,13 @@ function Search() {
 }
 
 //export function SavePlaceAfterSearch() {
-  //const db = firebase.firestore();
-  //const { currentUser } = useAuth();
-  //Search(function() {
-    //db.collection('users').doc(currentUser.uid).update({
-      //restaurants: firebase.firestore.FieldValue.arrayUnion("PhoKing")
-    //});   
-  //})
+//const db = firebase.firestore();
+//const { currentUser } = useAuth();
+//Search(function() {
+//db.collection('users').doc(currentUser.uid).update({
+//restaurants: firebase.firestore.FieldValue.arrayUnion("PhoKing")
+//});
+//})
 //}
 
 /*

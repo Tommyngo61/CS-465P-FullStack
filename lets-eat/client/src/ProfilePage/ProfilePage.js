@@ -63,16 +63,25 @@ export default function ProfilePage() {
       <Table striped bordered hover size="sm">
         <thead>
           <tr>
-            <th>#</th>
-            <th>name of Restaurant</th>
-            <th>Location</th>
-            <th>x</th>
+            <th>Restaurant Image</th>
+            <th>Name of Restaurant</th>
+            <th>Address</th>
           </tr>
         </thead>
         {tableData.map((item, i) => (
           <tbody>
-            <tr key={i}>
-              <td>{item}</td>
+            <tr key={item.id}>
+              <td>
+                <img
+                  className="resturant-image inline"
+                  width={100}
+                  height={100}
+                  alt="Restaruant"
+                  src={item.image_url}
+                ></img>
+              </td>
+              <td>{item.name}</td>
+              <td>{`${item.location.display_address} `}</td>
             </tr>
           </tbody>
         ))}
