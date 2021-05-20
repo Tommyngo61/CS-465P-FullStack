@@ -18,6 +18,7 @@ export default function ProfilePage() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const [tableData, setTableData] = useState("");
+  const [username, setUserName] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const db = firebase.firestore();
@@ -32,6 +33,8 @@ export default function ProfilePage() {
         .then((doc) => {
           console.log("Document data:", doc.data());
           //console.log(typeof doc.data());
+          setUserName(doc.data().username);
+          console.log("user-name", username);
           setTableData(doc.data().restaurants);
           console.log("mytable", tableData);
           setLoading(true);
@@ -98,7 +101,7 @@ export default function ProfilePage() {
             <h2 className="text-center mb-4">Profile</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             <Row>
-              <strong>Email:</strong> {currentUser.email}
+              <strong>Username: </strong> {username}
             </Row>
             <Row>
               <Col xs={4}>

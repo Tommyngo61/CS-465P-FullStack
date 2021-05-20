@@ -13,10 +13,11 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true)
     const db = firebase.firestore();
 
-    function signup(email, password) {
+    function signup(email, password, username) {
         return auth.createUserWithEmailAndPassword(email, password).then(cred => {
             db.collection('users').doc(cred.user.uid).set({
-                restaurants: ["test restaurant"]
+                restaurants: [],
+                username: username
             })
         });
     }
@@ -32,9 +33,6 @@ export function AuthProvider({ children }) {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             setCurrentUser(user)
-//            db.collection('users').doc(user.uid).set({
-                //restaurants: ['test restaurant']
-            //})           
             setLoading(false)
         })
 
