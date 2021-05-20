@@ -61,12 +61,15 @@ function Search() {
 
   const updateFirestore = () => {
     console.log("random place23", randomPlace);
-    db.collection("users")
-      .doc(currentUser.uid)
-      .update({
-        restaurants: firebase.firestore.FieldValue.arrayUnion(randomPlace),
+    if(currentUser) {
+      db.collection("users")
+        .doc(currentUser.uid)
+        .update({
+          restaurants: firebase.firestore.FieldValue.arrayUnion(randomPlace),
       });
+    }
   };
+
   return (
     <>
       {isLoading ? (
