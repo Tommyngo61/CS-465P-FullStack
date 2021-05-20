@@ -8,6 +8,7 @@ import firebase from '../firebaseDB/firebase';
 export default function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
+  const userRef = useRef();
   const passwordConfirmRef = useRef();
   const { signup, currentUser } = useAuth();
   const [error, setError] = useState("");
@@ -24,7 +25,7 @@ export default function Signup() {
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value)
+      await signup(emailRef.current.value, passwordRef.current.value, userRef.current.value)
       history.push("/");
     } catch {
       setError("Failed to sign up");
@@ -43,7 +44,7 @@ export default function Signup() {
             <Form onSubmit={handleSubmit}>
               <Form.Group id="username">
                 <Form.Label>Username</Form.Label>
-                <Form.Control id="username"></Form.Control>
+                <Form.Control id="username" ref={userRef} required ></Form.Control>
               </Form.Group>
               <Form.Group id="email">
                 <Form.Label>Email</Form.Label>
