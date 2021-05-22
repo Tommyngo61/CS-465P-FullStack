@@ -7,7 +7,7 @@ import axios from "axios";
 import firebase from "../firebaseDB/firebase";
 import { useAuth } from "../contexts/AuthContext";
 import "./Search.css";
-
+import { v4 as uuidv4 } from "uuid";
 function Search() {
   let location1 = useLocation();
   //this is the infomation the people seach. I got the variables for you to use it anywhere you want
@@ -20,16 +20,26 @@ function Search() {
   const [isLoading, setIsLoading] = useState(false);
   const db = firebase.firestore();
   const { currentUser } = useAuth();
-  const [review, setReview] = useState("");
+  const [reviews, setReview] = useState("");
+  const [loadingReview, setLoadingReview] = useState(false);
+  const [toggle, setToggle] = useState(false);
 
   const getReview = async () => {
+    setLoadingReview(false);
     const review = async () => {
       await axios
         .get(`http://localhost:5000/v3/businesses/${randomPlace.id}`)
         .then(({ data }) => setReview(data.reviews))
         .catch((err) => console.log(err));
+      setLoadingReview(true);
     };
     review();
+  };
+  const review = () => {
+    if (!loadingReview) {
+      getReview();
+    }
+    setToggle(!toggle);
   };
 
   useEffect(() => {
@@ -61,12 +71,12 @@ function Search() {
 
   const updateFirestore = () => {
     console.log("random place23", randomPlace);
-    if(currentUser) {
+    if (currentUser) {
       db.collection("users")
-      .doc(currentUser.uid)
-      .update({
-        restaurants: firebase.firestore.FieldValue.arrayUnion(randomPlace),
-      });
+        .doc(currentUser.uid)
+        .update({
+          restaurants: firebase.firestore.FieldValue.arrayUnion(randomPlace),
+        });
     }
   };
 
@@ -76,13 +86,33 @@ function Search() {
         <div>
           <TopNav />
           <Container fluid>
-            <Row>
+            <Row className="mt-4">
               <Col>
                 <h1>{randomPlace.name}</h1>
               </Col>
+              <Col>
+                <ReactStars
+                  count={5}
+                  value={randomPlace.rating}
+                  size={30}
+                  edit={false}
+                  activeColor="#ffd700"
+                />
+              </Col>
+              <Col>
+                <Button
+                  className="review-btn"
+                  variant="primary"
+                  size="lg"
+                  type="button"
+                  onClick={() => review()}
+                >
+                  {toggle ? "Close" : "Reviews"}
+                </Button>
+              </Col>
             </Row>
             <Row className="mt-5 justify-content-md-center">
-              <Col xs={{ span: 3, offset: 1 }}>
+              <Col xs={{ span: 4 }}>
                 <img
                   className="image"
                   src={randomPlace.image_url}
@@ -91,30 +121,21 @@ function Search() {
                   height={300}
                 ></img>
               </Col>
-              <Col xs={6} className="description ml-5">
-                <ReactStars
-                  count={5}
-                  value={randomPlace.rating}
-                  size={30}
-                  edit={false}
-                  activeColor="#ffd700"
-                />
-
-                <h2>Description</h2>
-                <span>
-                  Mauris a laoreet congue luctus. Ut condimentum magna id risus
-                  iaculis, ac mollis turpis ultrices. Sed facilisis dui neque,
-                  malesuada dictum enim malesuada non. Cras congue auctor libero
-                  et imperdiet. Vestibulum interdum arcu est. Aliquam ultricies
-                  accumsan arcu id hendrerit. Fusce cursus, urna vel pulvinar
-                  ullamcorper, augue lorem varius diam, ut varius erat sapien at
-                  odio. Sed bibendum ante et ullamcorper hendrerit. Vestibulum
-                </span>
-              </Col>
-              <Col></Col>
-            </Row>
-            <Row className="mt-5 justify-content-md-center">
-              <Col xs={{ offset: 6 }}>
+              <Col xs={4} className="description ">
+                <div className="description1">
+                  <h2>Infomation</h2>
+                  <div>
+                    <ul>
+                      {randomPlace.categories.map((item) => (
+                        <li>{item.title}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <h2>Address</h2>
+                  <p>{randomPlace.location.display_address}</p>
+                  <h2>Phone Number</h2>
+                  <p>{randomPlace.phone}</p>
+                </div>
                 <Button
                   variant="primary"
                   size="lg"
@@ -132,16 +153,20 @@ function Search() {
                 >
                   Try This Place!
                 </Button>
-                <Button
-                  className="pick-btn"
-                  variant="primary"
-                  size="lg"
-                  type="button"
-                  onClick={() => getReview()}
-                >
-                  Reviews
-                </Button>
               </Col>
+              <Col>
+                {toggle &&
+                  loadingReview &&
+                  reviews.map((review) => (
+                    <>
+                      <h2 key={uuidv4}>{review.user.name}</h2>
+                      <p>{review.text}</p>
+                    </>
+                  ))}
+              </Col>
+            </Row>
+            <Row className="mt-5 justify-content-md-center">
+              <Col xs={{ offset: 6 }}></Col>
             </Row>
           </Container>
         </div>
