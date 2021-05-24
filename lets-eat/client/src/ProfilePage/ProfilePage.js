@@ -101,34 +101,24 @@ export default function ProfilePage() {
             <h2 className="text-center mb-4">Profile</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             <Row>
-              <strong>Username: </strong> {username}
-            </Row>
-            <Row>
-              <Col xs={4}>
-                <img
-                  src="https://via.placeholder.com/300x200"
-                  alt="placeholder"
-                ></img>
+              <Col className="text-center align-self-center">
+                <strong>Username: </strong> {username}
+                <Card className="mt-4">
+                    <Card.Header>
+                      <h2>Bio</h2>
+                    </Card.Header>
+                    <Card.Body>
+                      <p>
+                        Even in unflattering office light, Breanna McKenzie had
+                        the healthy glow of someone who jogged each morning,
+                        practised yoga with intent and deep-conditioned her glossy
+                        black ponytail religiously every Sunday.
+                      </p>
+                    </Card.Body>
+                  </Card>
               </Col>
-              <Col>
-                <Card>
-                  <Card.Header>
-                    <h2>Bio</h2>
-                  </Card.Header>
-                  <Card.Body>
-                    <p>
-                      Even in unflattering office light, Breanna McKenzie had
-                      the healthy glow of someone who jogged each morning,
-                      practised yoga with intent and deep-conditioned her glossy
-                      black ponytail religiously every Sunday.
-                    </p>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={6} className="mt-5">
-                <h3>List of Restaurants</h3>
+              <Col xs={6} className="mt-4">
+                <h3 className="text-center">List of Restaurants</h3>
                 <div className="myTable">{loading && displayTable()}</div>
               </Col>
             </Row>
