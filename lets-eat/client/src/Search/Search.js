@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Alert } from "react-bootstrap";
 import TopNav from "../Landingpage/TopNav/TopNav";
 import { useLocation } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
@@ -23,6 +23,7 @@ function Search() {
   const [reviews, setReview] = useState("");
   const [loadingReview, setLoadingReview] = useState(false);
   const [toggle, setToggle] = useState(false);
+  const [alert, setAlert] = useState(false);
 
   const getReview = async () => {
     setLoadingReview(false);
@@ -86,6 +87,30 @@ function Search() {
         <div>
           <TopNav />
           <Container fluid>
+            {alert ? (
+              <Row>
+                <Col className="alert-card d-flex justify-content-center">
+                  <Alert className="alert" show={alert} variant="success">
+                    <Alert.Heading>You Chose {randomPlace.name}!</Alert.Heading>
+                    <p>
+                      Good job! We will save this place into your profile for
+                      future reference.
+                    </p>
+                    <hr />
+                    <div className="d-flex justify-content-center">
+                      <Button
+                        onClick={() => setAlert(false)}
+                        variant="outline-success"
+                      >
+                        Close Me
+                      </Button>
+                    </div>
+                  </Alert>
+                </Col>
+              </Row>
+            ) : (
+              ""
+            )}
             <Row className="mt-4">
               <Col>
                 <h1>{randomPlace.name}</h1>
@@ -149,7 +174,10 @@ function Search() {
                   variant="primary"
                   size="lg"
                   type="submit"
-                  onClick={() => updateFirestore()}
+                  onClick={() => {
+                    updateFirestore();
+                    setAlert(true);
+                  }}
                 >
                   Try This Place!
                 </Button>
