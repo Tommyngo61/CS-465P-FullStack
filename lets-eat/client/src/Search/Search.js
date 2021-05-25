@@ -1,5 +1,5 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Alert } from "react-bootstrap";
 import TopNav from "../Landingpage/TopNav/TopNav";
 import { useLocation } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
@@ -8,8 +8,12 @@ import firebase from "../firebaseDB/firebase";
 import { useAuth } from "../contexts/AuthContext";
 import "./Search.css";
 import { v4 as uuidv4 } from "uuid";
+<<<<<<< HEAD
 import { Map, GoogleApiWrapper } from "google-maps-react";
 import Maps from "./Google/Maps";
+=======
+
+>>>>>>> f689cbf51e9ade69a5c350d42a4a23cc826445d8
 function Search() {
   let location1 = useLocation();
   //this is the infomation the people seach. I got the variables for you to use it anywhere you want
@@ -25,8 +29,12 @@ function Search() {
   const [reviews, setReview] = useState("");
   const [loadingReview, setLoadingReview] = useState(false);
   const [toggle, setToggle] = useState(false);
+<<<<<<< HEAD
   const [current, setCurrent] = useState(0);
   const [place, setPlace] = useState(0);
+=======
+  const [alert, setAlert] = useState(false);
+>>>>>>> f689cbf51e9ade69a5c350d42a4a23cc826445d8
 
   const getReview = async () => {
     setLoadingReview(false);
@@ -104,6 +112,30 @@ function Search() {
         <div>
           <TopNav />
           <Container fluid>
+            {alert ? (
+              <Row>
+                <Col className="alert-card d-flex justify-content-center">
+                  <Alert className="alert" show={alert} variant="success">
+                    <Alert.Heading>You Chose {randomPlace.name}!</Alert.Heading>
+                    <p>
+                      Good job! We will save this place into your profile for
+                      future reference.
+                    </p>
+                    <hr />
+                    <div className="d-flex justify-content-center">
+                      <Button
+                        onClick={() => setAlert(false)}
+                        variant="outline-success"
+                      >
+                        Close Me
+                      </Button>
+                    </div>
+                  </Alert>
+                </Col>
+              </Row>
+            ) : (
+              ""
+            )}
             <Row className="mt-4">
               <Col>
                 <h1>{randomPlace.name}</h1>
@@ -167,7 +199,10 @@ function Search() {
                   variant="primary"
                   size="lg"
                   type="submit"
-                  onClick={() => updateFirestore()}
+                  onClick={() => {
+                    updateFirestore();
+                    setAlert(true);
+                  }}
                 >
                   Try This Place!
                 </Button>
