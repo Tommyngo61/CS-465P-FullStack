@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import TopNav from "../Landingpage/TopNav/TopNav";
 import {
   Card,
@@ -13,15 +13,19 @@ import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 import "./ProfilePage.css";
 import firebase from "../firebaseDB/firebase";
+import PopBio from "./PopBio.js";
 
 export default function ProfilePage() {
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const [tableData, setTableData] = useState("");
   const [username, setUserName] = useState("");
+  const [bio, setBio] = useState("");
+  const [buttonPopup, setButtonPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const db = firebase.firestore();
+  const bioRef = useRef();
 
   //var docRef = db.collection("users").doc(currentUser.uid);
   useEffect(() => {
@@ -32,15 +36,12 @@ export default function ProfilePage() {
         .get()
         .then((doc) => {
           console.log("Document data:", doc.data());
-          //console.log(typeof doc.data());
           setUserName(doc.data().username);
+          setBio(doc.data().bio);
           console.log("user-name", username);
           setTableData(doc.data().restaurants);
           console.log("mytable", tableData);
           setLoading(true);
-          //console.log("hi", tableData);
-          //displayTable(doc.data);
-          //return doc.data();
         })
         .catch((error) => {
           console.log("Error getting document:", error);
@@ -61,6 +62,20 @@ export default function ProfilePage() {
       setError("Failed to log out");
     }
   }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    db.collection('users').doc(currentUser.uid).update({
+      bio: bioRef.current.value
+    })
+    setButtonPopup(false);
+  }
+
+  function handleCancel(e) {
+    e.preventDefault();
+    setButtonPopup(false);
+  }
+
   const displayTable = () => {
     return (
       <Table striped bordered hover size="sm">
@@ -108,13 +123,9 @@ export default function ProfilePage() {
                       <h2>Bio</h2>
                     </Card.Header>
                     <Card.Body>
-                      <p>
-                        Even in unflattering office light, Breanna McKenzie had
-                        the healthy glow of someone who jogged each morning,
-                        practised yoga with intent and deep-conditioned her glossy
-                        black ponytail religiously every Sunday.
-                      </p>
+                      <p>{bio}</p>
                     </Card.Body>
+                    <button onClick={() => setButtonPopup(true)}>Edit Bio</button>
                   </Card>
               </Col>
               <Col xs={6} className="mt-4">
@@ -130,6 +141,15 @@ export default function ProfilePage() {
           </Button>
         </div>
       </Container>
+      <PopBio trigger={buttonPopup} setTrigger={setButtonPopup}>
+        <form onSubmit={handleSubmit}>
+          <strong>New Bio</strong>
+          <textarea className="form-control" id="editBio" rows="5" ref={bioRef}></textarea>
+          <br></br>
+          <input type="submit" className="btn-primary" value="submit" />
+          <button type="button" className="btn-secondary" onClick={handleCancel}>cancel</button>
+        </form>
+      </PopBio>
     </>
   );
 }

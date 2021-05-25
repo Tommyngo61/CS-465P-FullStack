@@ -17,7 +17,8 @@ export function AuthProvider({ children }) {
         return auth.createUserWithEmailAndPassword(email, password).then(cred => {
             db.collection('users').doc(cred.user.uid).set({
                 restaurants: [],
-                username: username
+                username: username,
+                bio: ""
             })
         });
     }
