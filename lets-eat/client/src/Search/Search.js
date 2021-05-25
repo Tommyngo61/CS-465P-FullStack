@@ -2,18 +2,12 @@ import React, { useState, useLayoutEffect, useEffect } from "react";
 import { Container, Row, Col, Button, Alert } from "react-bootstrap";
 import TopNav from "../Landingpage/TopNav/TopNav";
 import { useLocation } from "react-router-dom";
-import ReactStars from "react-rating-stars-component";
+import StarRatings from "react-star-ratings";
 import axios from "axios";
 import firebase from "../firebaseDB/firebase";
 import { useAuth } from "../contexts/AuthContext";
 import "./Search.css";
 import { v4 as uuidv4 } from "uuid";
-<<<<<<< HEAD
-import { Map, GoogleApiWrapper } from "google-maps-react";
-import Maps from "./Google/Maps";
-=======
-
->>>>>>> f689cbf51e9ade69a5c350d42a4a23cc826445d8
 function Search() {
   let location1 = useLocation();
   //this is the infomation the people seach. I got the variables for you to use it anywhere you want
@@ -29,13 +23,8 @@ function Search() {
   const [reviews, setReview] = useState("");
   const [loadingReview, setLoadingReview] = useState(false);
   const [toggle, setToggle] = useState(false);
-<<<<<<< HEAD
-  const [current, setCurrent] = useState(0);
-  const [place, setPlace] = useState(0);
-=======
   const [alert, setAlert] = useState(false);
->>>>>>> f689cbf51e9ade69a5c350d42a4a23cc826445d8
-
+  const [count, setCount] = useState(0);
   const getReview = async () => {
     setLoadingReview(false);
     const review = async () => {
@@ -59,14 +48,14 @@ function Search() {
     console.log("random place23", randomPlace);
     console.log(position.coords.longitude);
     console.log(position.coords.latitude);
-    setCurrent({
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-    });
-    setPlace({
-      lat: randomPlace.coordinates.latitude,
-      lng: randomPlace.coordinates.longitude,
-    });
+    // setCurrent({
+    //   lat: position.coords.latitude,
+    //   lng: position.coords.longitude,
+    // });
+    // setPlace({
+    //   lat: randomPlace.coordinates.latitude,
+    //   lng: randomPlace.coordinates.longitude,
+    // });
   };
   useEffect(() => {
     setIsLoading(false);
@@ -84,16 +73,20 @@ function Search() {
   useLayoutEffect(() => {
     const chooseRandom = async () => {
       setIsLoading(false);
-      const len = places.length;
-      const number = Math.floor(Math.random() * len);
-      setRandomPlace(places[number]);
+      pickRandom();
       setIsLoading(true);
     };
     setIsLoading(false);
     chooseRandom();
     setIsLoading(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [places]);
   ///end here
+  const pickRandom = () => {
+    const len = places.length;
+    const number = Math.floor(Math.random() * len);
+    setRandomPlace(places[number]);
+  };
 
   const updateFirestore = () => {
     console.log("random place23", randomPlace);
@@ -141,12 +134,12 @@ function Search() {
                 <h1>{randomPlace.name}</h1>
               </Col>
               <Col>
-                <ReactStars
-                  count={5}
-                  value={randomPlace.rating}
-                  size={30}
-                  edit={false}
-                  activeColor="#ffd700"
+                <StarRatings
+                  rating={randomPlace.rating}
+                  starRatedColor="yellow"
+                  changeRating={randomPlace.rating}
+                  numberOfStars={5}
+                  name="rating"
                 />
               </Col>
               <Col>
@@ -190,9 +183,14 @@ function Search() {
                   variant="primary"
                   size="lg"
                   type="submit"
-                  onClick={() => window.location.reload()}
+                  onClick={() => {
+                    if (count < 3) {
+                      pickRandom();
+                      setCount((count) => count + 1);
+                    }
+                  }}
                 >
-                  Reroll
+                  {count < 3 ? "Reroll" : "No more reroll"}
                 </Button>
                 <Button
                   className="pick-btn"
@@ -216,7 +214,7 @@ function Search() {
                       <p>{review.text}</p>
                     </>
                   ))}
-                {!toggle && loadingReview && <Maps current={current} />}
+                {/* {!toggle && loadingReview && <Maps current={current} />} */}
               </Col>
             </Row>
             <Row className="mt-5 justify-content-md-center">
