@@ -93,7 +93,7 @@ export default function ProfilePage() {
                 <img
                   className="resturant-image inline"
                   width={100}
-                  height={100}
+                  height={80}
                   alt="Restaruant"
                   src={item.image_url}
                 ></img>
@@ -143,8 +143,8 @@ export default function ProfilePage() {
       </Container>
       <PopBio trigger={buttonPopup} setTrigger={setButtonPopup}>
         <form onSubmit={handleSubmit}>
-          <strong>New Bio</strong>
-          <textarea className="form-control" id="editBio" rows="5" ref={bioRef}></textarea>
+          <strong>Update Bio</strong>
+          <textarea className="form-control" contenteditable="true" id="editBio" rows="5" ref={bioRef}>{bio}</textarea>
           <br></br>
           <input type="submit" className="btn-primary" value="submit" />
           <button type="button" className="btn-secondary" onClick={handleCancel}>cancel</button>
