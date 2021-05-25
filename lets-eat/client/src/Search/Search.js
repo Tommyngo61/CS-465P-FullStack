@@ -8,6 +8,8 @@ import firebase from "../firebaseDB/firebase";
 import { useAuth } from "../contexts/AuthContext";
 import "./Search.css";
 import { v4 as uuidv4 } from "uuid";
+import { Map, GoogleApiWrapper } from "google-maps-react";
+import Maps from "./Google/Maps";
 function Search() {
   let location1 = useLocation();
   //this is the infomation the people seach. I got the variables for you to use it anywhere you want
@@ -23,6 +25,8 @@ function Search() {
   const [reviews, setReview] = useState("");
   const [loadingReview, setLoadingReview] = useState(false);
   const [toggle, setToggle] = useState(false);
+  const [current, setCurrent] = useState(0);
+  const [place, setPlace] = useState(0);
 
   const getReview = async () => {
     setLoadingReview(false);
@@ -38,10 +42,24 @@ function Search() {
   const review = () => {
     if (!loadingReview) {
       getReview();
+      navigator.geolocation.getCurrentPosition(getCoordinates);
     }
     setToggle(!toggle);
   };
-
+  const getCoordinates = (position) => {
+    console.log(position);
+    console.log("random place23", randomPlace);
+    console.log(position.coords.longitude);
+    console.log(position.coords.latitude);
+    setCurrent({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    });
+    setPlace({
+      lat: randomPlace.coordinates.latitude,
+      lng: randomPlace.coordinates.longitude,
+    });
+  };
   useEffect(() => {
     setIsLoading(false);
     const getData = async () => {
@@ -107,7 +125,7 @@ function Search() {
                   type="button"
                   onClick={() => review()}
                 >
-                  {toggle ? "Close" : "Reviews"}
+                  {toggle ? "Map" : "Reviews"}
                 </Button>
               </Col>
             </Row>
@@ -163,6 +181,7 @@ function Search() {
                       <p>{review.text}</p>
                     </>
                   ))}
+                {!toggle && loadingReview && <Maps current={current} />}
               </Col>
             </Row>
             <Row className="mt-5 justify-content-md-center">
