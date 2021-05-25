@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
             db.collection('users').doc(cred.user.uid).set({
                 restaurants: [],
                 username: username,
-                bio: ""
+                bio: "Default Bio."
             })
         });
     }
