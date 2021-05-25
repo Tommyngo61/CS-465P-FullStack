@@ -28,13 +28,14 @@ const ModelsMap = ({ current, place }) => {
         defaultCenter={current}
         defaultZoom={15}
         yesIWantToUseGoogleMapApiInternals
+        onGoogleApiLoaded={({ map, maps }) => marker(map, maps)}
       >
-        <Marker
+        {/* <Marker
           lat={current.lat}
           lng={current.lng}
           name="hi"
           color="blue"
-        ></Marker>
+        ></Marker> */}
       </GoogleMapReact>
     </div>
   );

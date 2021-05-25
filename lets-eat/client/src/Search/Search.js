@@ -8,6 +8,7 @@ import firebase from "../firebaseDB/firebase";
 import { useAuth } from "../contexts/AuthContext";
 import "./Search.css";
 import { v4 as uuidv4 } from "uuid";
+import Maps from "./Google/Maps";
 function Search() {
   let location1 = useLocation();
   //this is the infomation the people seach. I got the variables for you to use it anywhere you want
@@ -25,6 +26,8 @@ function Search() {
   const [toggle, setToggle] = useState(false);
   const [alert, setAlert] = useState(false);
   const [count, setCount] = useState(0);
+  const [place, setPlace] = useState();
+  const [current, setCurrent] = useState();
   const getReview = async () => {
     setLoadingReview(false);
     const review = async () => {
@@ -38,9 +41,9 @@ function Search() {
   };
   const review = () => {
     if (!loadingReview) {
-      getReview();
       navigator.geolocation.getCurrentPosition(getCoordinates);
     }
+    getReview();
     setToggle(!toggle);
   };
   const getCoordinates = (position) => {
@@ -48,14 +51,14 @@ function Search() {
     console.log("random place23", randomPlace);
     console.log(position.coords.longitude);
     console.log(position.coords.latitude);
-    // setCurrent({
-    //   lat: position.coords.latitude,
-    //   lng: position.coords.longitude,
-    // });
-    // setPlace({
-    //   lat: randomPlace.coordinates.latitude,
-    //   lng: randomPlace.coordinates.longitude,
-    // });
+    setCurrent({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    });
+    setPlace({
+      lat: randomPlace.coordinates.latitude,
+      lng: randomPlace.coordinates.longitude,
+    });
   };
   useEffect(() => {
     setIsLoading(false);
@@ -104,7 +107,7 @@ function Search() {
       {isLoading ? (
         <div>
           <TopNav />
-          <Container fluid>
+          <Container className="body" fluid>
             {alert ? (
               <Row>
                 <Col className="alert-card d-flex justify-content-center">
@@ -140,6 +143,7 @@ function Search() {
                   changeRating={randomPlace.rating}
                   numberOfStars={5}
                   name="rating"
+                  isSelectable="false"
                 />
               </Col>
               <Col>
@@ -187,6 +191,7 @@ function Search() {
                     if (count < 3) {
                       pickRandom();
                       setCount((count) => count + 1);
+                      setToggle(false);
                     }
                   }}
                 >
@@ -214,7 +219,9 @@ function Search() {
                       <p>{review.text}</p>
                     </>
                   ))}
-                {/* {!toggle && loadingReview && <Maps current={current} />} */}
+                {!toggle && loadingReview && (
+                  <Maps current={current} place={place} />
+                )}
               </Col>
             </Row>
             <Row className="mt-5 justify-content-md-center">
