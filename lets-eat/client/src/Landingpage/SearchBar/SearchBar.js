@@ -14,8 +14,13 @@ function SearchBar(props) {
   const [term, setTerm] = useState("");
   const [location, setLocation] = useState("");
   const [check, setCheck] = useState("");
+  const [ifcheck, setIfCheck] = useState(false);
 
   const submit = (e) => {
+    if (!check) {
+      setIfCheck(true);
+      return;
+    }
     if (typeof props.search === "function") {
       props.search(term, location, check);
     }
@@ -49,7 +54,6 @@ function SearchBar(props) {
                   value={term}
                 />
               </InputGroup>
-
               <Form.Group controlId="address">
                 <Form.Label className="">Location</Form.Label>
                 <Form.Control
@@ -118,7 +122,6 @@ function SearchBar(props) {
                   label="dine-in"
                 ></Form.Check>
               </Form.Group> */}
-
               <Form.Group controlId="price">
                 <Form.Label className="header">Price Ranges:</Form.Label>
                 <Row xs={6}>
@@ -152,6 +155,7 @@ function SearchBar(props) {
                   </Col>
                 </Row>
               </Form.Group>
+              {ifcheck ? <p>Please check on price</p> : " "}
 
               <Button
                 variant="primary"
