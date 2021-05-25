@@ -8,6 +8,7 @@ import firebase from "../firebaseDB/firebase";
 import { useAuth } from "../contexts/AuthContext";
 import "./Search.css";
 import { v4 as uuidv4 } from "uuid";
+
 function Search() {
   let location1 = useLocation();
   //this is the infomation the people seach. I got the variables for you to use it anywhere you want
