@@ -40,6 +40,7 @@ function Search() {
   const review = () => {
     if (!loadingReview) {
       // navigator.geolocation.getCurrentPosition(getCoordinates);
+      console.log("hi");
     }
     getReview();
     setToggle(!toggle);
