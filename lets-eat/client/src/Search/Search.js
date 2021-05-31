@@ -219,9 +219,9 @@ function Search() {
                       <p>{review.text}</p>
                     </>
                   ))}
-                {!toggle && loadingReview && (
+                {/* {!toggle && loadingReview && (
                   <Maps current={current} place={place} />
-                )}
+                )} */}
               </Col>
             </Row>
             <Row className="mt-5 justify-content-md-center">
