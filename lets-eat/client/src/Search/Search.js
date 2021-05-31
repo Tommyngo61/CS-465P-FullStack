@@ -26,8 +26,6 @@ function Search() {
   const [toggle, setToggle] = useState(false);
   const [alert, setAlert] = useState(false);
   const [count, setCount] = useState(0);
-  const [place, setPlace] = useState();
-  const [current, setCurrent] = useState();
   const getReview = async () => {
     setLoadingReview(false);
     const review = async () => {
@@ -41,24 +39,10 @@ function Search() {
   };
   const review = () => {
     if (!loadingReview) {
-      navigator.geolocation.getCurrentPosition(getCoordinates);
+      // navigator.geolocation.getCurrentPosition(getCoordinates);
     }
     getReview();
     setToggle(!toggle);
-  };
-  const getCoordinates = (position) => {
-    console.log(position);
-    console.log("random place23", randomPlace);
-    console.log(position.coords.longitude);
-    console.log(position.coords.latitude);
-    setCurrent({
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-    });
-    setPlace({
-      lat: randomPlace.coordinates.latitude,
-      lng: randomPlace.coordinates.longitude,
-    });
   };
   useEffect(() => {
     setIsLoading(false);
@@ -154,7 +138,7 @@ function Search() {
                   type="button"
                   onClick={() => review()}
                 >
-                  {toggle ? "Map" : "Reviews"}
+                  {toggle ? "Close" : "Reviews"}
                 </Button>
               </Col>
             </Row>
@@ -219,9 +203,7 @@ function Search() {
                       <p>{review.text}</p>
                     </>
                   ))}
-                {/* {!toggle && loadingReview && (
-                  <Maps current={current} place={place} />
-                )} */}
+              
               </Col>
             </Row>
             <Row className="mt-5 justify-content-md-center">
