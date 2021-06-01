@@ -8,7 +8,6 @@ import firebase from "../firebaseDB/firebase";
 import { useAuth } from "../contexts/AuthContext";
 import "./Search.css";
 import { v4 as uuidv4 } from "uuid";
-import Maps from "./Google/Maps";
 function Search() {
   let location1 = useLocation();
   //this is the infomation the people seach. I got the variables for you to use it anywhere you want
@@ -31,7 +30,7 @@ function Search() {
     setLoadingReview(false);
     const review = async () => {
       await axios
-        .get(`http://localhost:5000/v3/businesses/${randomPlace.id}`)
+        .get(`https://lets-eat-server.herokuapp.com/v3/businesses/${randomPlace.id}`)
         .then(({ data }) => setReview(data.reviews))
         .catch((err) => console.log(err));
       setLoadingReview(true);
@@ -51,7 +50,7 @@ function Search() {
     const getData = async () => {
       await axios
         .get(
-          `http://localhost:5000/v3/businesses/search?term=${term}&location=${location}&price=${price}`
+          `https://lets-eat-server.herokuapp.com/v3/businesses/search?term=${term}&location=${location}&price=${price}`
         )
         .then(({ data }) => setPlaces(data))
         .catch((err) => console.log(err));
