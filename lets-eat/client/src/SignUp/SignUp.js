@@ -3,7 +3,7 @@ import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import TopNav from "../Landingpage/TopNav/TopNav";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
-import firebase from '../firebaseDB/firebase';
+// import firebase from '../firebaseDB/firebase';
 
 export default function Signup() {
   const emailRef = useRef();
